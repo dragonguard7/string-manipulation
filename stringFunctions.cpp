@@ -1,10 +1,12 @@
 #include <iostream>
-#include <string>
+#include <istream>
 
 using namespace std;
 
 char* appendWord(char *source, char* append);
 int getLength(char *str);
+void printSentence(char *str);
+void appendSentence(char *source);
 
 int main()
 {
@@ -12,22 +14,36 @@ int main()
     char value = 0;
 
     currentString = appendWord("Hello", str);
-    cout << "Current string: " << currentString << endl;
+    printSentence(currentString);
 
     while(value != 'q'){
         cout << "Please enter a command: " << endl <<
-                "\tA-append word." << endl;
+                "\tA-append word." << endl <<
+                "\tN-create new sentence" << endl <<
+                "\tP-print sentence" << endl;
         cin >> value;
 
         if(value > 'Z'){ value -= ' ';}
         switch(value){
         case 'A':
-             cout << "Please enter a string" << endl;
-             cin >> str;
+             cout << "Please enter a sentence" << endl;
+             cin.ignore(1);
+             cin.getline(nextString, 50);
+             //cin >> str;
              nextString = appendWord(currentString, str);
-             cout << "Current string: " << nextString << endl;
              currentString = nextString;
              break;
+        case 'N':
+            cout << "Please enter a new sentence" << endl;
+            cin.ignore(1);
+            cin.getline(nextString, 50);
+            cout << "new sentence: " << nextString<< endl;
+            nextString = appendWord(currentString, nextString);
+
+            break;
+        case 'P':
+            printSentence(currentString);
+            break;
 
         }
     }
@@ -61,6 +77,12 @@ char* appendWord(char *source, char* append){
 
 }
 
+void appendSentence(char *source){
+
+        char * newSentence = (char*)malloc(sizeof(char*));
+
+}
+
 
 //***Helper function to avoid string library.
 
@@ -72,4 +94,8 @@ int getLength(char *str){
         count++;
     }
     return count;
+}
+
+void printSentence(char *str){
+    cout << "Current sentence: " << str << endl;
 }
