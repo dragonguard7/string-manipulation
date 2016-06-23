@@ -1,19 +1,18 @@
+#include <stdlib.h>
 #include <iostream>
-#include <istream>
 
 using namespace std;
 
-char* appendWord(char *source, char* append);
+char* appendSentence(char *source, char* append);
 int getLength(char *str);
 void printSentence(char *str);
-void appendSentence(char *source);
 
 int main()
 {
-    char str[50],*nextString = (char*)malloc(sizeof(char*)), *currentString = (char*)malloc(sizeof(char*));
-    char value = 0;
+    char append[50], newString[50], *nextString = (char*)malloc(sizeof(char*)), *currentString = (char*)malloc(sizeof(char*));
+    char value = 'n';
 
-    currentString = appendWord("Hello", str);
+    currentString = "Hello";
     printSentence(currentString);
 
     while(value != 'q'){
@@ -26,20 +25,19 @@ int main()
         if(value > 'Z'){ value -= ' ';}
         switch(value){
         case 'A':
-             cout << "Please enter a sentence" << endl;
+             cout << "Please enter an addition" << endl;
              cin.ignore(1);
-             cin.getline(nextString, 50);
-             //cin >> str;
-             nextString = appendWord(currentString, str);
+             cin.getline(append, 50);
+             nextString = appendSentence(currentString, append);
              currentString = nextString;
+             printSentence(currentString);
              break;
         case 'N':
             cout << "Please enter a new sentence" << endl;
             cin.ignore(1);
-            cin.getline(nextString, 50);
-            cout << "new sentence: " << nextString<< endl;
-            nextString = appendWord(currentString, nextString);
-
+            cin.getline(newString, 50);
+            currentString = newString;
+            printSentence(currentString);
             break;
         case 'P':
             printSentence(currentString);
@@ -52,7 +50,7 @@ int main()
     return 0;
 }
 
-char* appendWord(char *source, char* append){
+char* appendSentence(char *source, char* append){
     int sourceLen = getLength(source);
     int appendLen = getLength(append);
 
@@ -74,12 +72,6 @@ char* appendWord(char *source, char* append){
     }
     newString[sourceLen+appendLen+1] = '\0';
     return newString;
-
-}
-
-void appendSentence(char *source){
-
-        char * newSentence = (char*)malloc(sizeof(char*));
 
 }
 
